@@ -100,7 +100,7 @@ import numpy as np
 
 import robosuite as suite
 from robosuite import load_controller_config
-from robosuite.utils.input_utils import input2action
+from robosuite.utils.input_utils import input2action_w_adhesion
 from robosuite.wrappers import VisualizationWrapper
 
 if __name__ == "__main__":
@@ -137,7 +137,7 @@ if __name__ == "__main__":
         "env_name": args.environment,
         "robots": args.robots,
         "controller_configs": controller_config,
-        # "gripper_types": "FingeredAdhesiveGripper",
+        "gripper_types": "AdhesiveRobotiq85Gripper",
     }
 
     # Check if we're using a multi-armed environment and use env_configuration argument if so
@@ -194,7 +194,7 @@ if __name__ == "__main__":
             active_robot = env.robots[0] if args.config == "bimanual" else env.robots[args.arm == "left"]
 
             # Get the newest action
-            action, grasp = input2action(
+            action, grasp, adhesion = input2action_w_adhesion(
                 device=device, robot=active_robot, active_arm=args.arm, env_configuration=args.config
             )
 
